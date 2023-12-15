@@ -1,0 +1,36 @@
+import React from "react";
+import TodoItem from "./ToDoItem";
+// import './ToDoList.css';
+import { ACTION, LIMIT } from "./constant";
+
+const TodoList = ({ action, todos, changeStatus, editing, remove, setEditingId, currentPage }) => {
+    const indexOfLastItem = currentPage * LIMIT;
+    const indexOfFirstItem = indexOfLastItem - LIMIT;
+
+    let currentTodos = todos;
+
+    if (action !== ACTION.ALL) {
+        currentTodos = todos.filter(item => item.status === (action === ACTION.ACTIVE)).slice(indexOfFirstItem, indexOfLastItem);
+    } else {
+        currentTodos = todos.slice(indexOfFirstItem, indexOfLastItem);
+    }
+
+    return (
+        <div className="ListTodoItem">
+            {currentTodos.map(item => (
+                <TodoItem
+                    key={item.id}
+                    id={item.id}
+                    value={item.text}
+                    status={item.status}
+                    changeStatus={changeStatus}
+                    editing={editing}
+                    remove={remove}
+                    setEditingId={setEditingId}
+                />
+            ))}
+        </div>
+    );
+};
+
+export default TodoList;
