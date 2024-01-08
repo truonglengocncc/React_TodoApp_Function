@@ -1,27 +1,27 @@
-// import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
-// const ThemeContext = createContext();
+const ThemeContext = createContext();
 
-// const ThemeProvider = ({ children }) => {
-//     const [theme, setTheme] = useState('light');
+const ThemeProvider = ({ children }) => {
+    const [theme, setTheme] = useState('light');
 
-//     const toggleTheme = () => {
-//         setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
-//     };
+    const toggleTheme = () => {
+        setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
+    };
 
-//     return (
-//         <ThemeContext.Provider value={{ theme, toggleTheme }}>
-//             {children}
-//         </ThemeContext.Provider>
-//     );
-// };
+    return (
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            {children}
+        </ThemeContext.Provider>
+    );
+};
 
-// const useTheme = () => {
-//     const context = useContext(ThemeContext);
-//     if (context === undefined) {
-//         throw new Error('useTheme must be used within a ThemeProvider');
-//     }
-//     return context;
-// };
+const useTheme = () => {
+    const context = useContext(ThemeContext);
+    if (context === undefined) {
+        throw new Error('useTheme must be used within a ThemeProvider');
+    }
+    return context;
+};
 
-// export { ThemeProvider, useTheme };
+export { ThemeProvider, useTheme, ThemeContext };

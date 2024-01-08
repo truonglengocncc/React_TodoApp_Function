@@ -2,62 +2,48 @@ import './App.css';
 import ToDoHeader from './Head';
 import TodoList from './ToDoList';
 import Footer from './Footer';
-import React, { useState, useEffect, useContext } from 'react';
-import { ACTION } from './constant';
-import { ThemeContext } from './ThemeProvider';
+import React, { useState, useEffect } from 'react';
+import { REDUCER_ACTION } from './constant';
+import { useTheme } from './ThemeProvider';
+import { Provider, useSelector, useDispatch } from 'react-redux'; // Chỉ import một lần
+import store from './Reducer/store';
+
 
 const App = () => {
-  const [todos, setTodos] = useState([
-    { id: 1, text: 'Go to School', status: false },
-    { id: 2, text: 'Go to lunch', status: false },
-    { id: 3, text: 'Go to lunch 2', status: true },
-  ]);
-  const [action, setAction] = useState(ACTION.ALL);
+  const dispatch = useDispatch();
+  const todos = useSelector(state => state.todos);
+  const [action, setAction] = useState(REDUCER_ACTION.ALL);
   const [editValue, setEditValue] = useState('');
-  const [editingId, setEditingId] = useState(0);
+  const { toggleTheme, theme } = useTheme();
   const [countComplete, setCountComplete] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { toggleTheme, theme } = useContext(ThemeContext);
+  
 
   useEffect(() => {
     const countComplete = todos.filter(todo => todo.status).length;
     setCountComplete(countComplete);
   }, [todos]);
 
-  const addTodoItem = item => {
-    const todoItem = {
-      id: todos.length ? Math.max(...todos.map(i => i.id)) + 1 : 0,
-      text: item,
-      status: false,
-    };
-    setTodos([todoItem, ...todos]);
-  };
-
-  const changeStatus = id => {
-    setTodos(prevTodos =>
-      prevTodos.map(todo =>
-        todo.id === id ? { ...todo, status: !todo.status } : todo
-      )
-    );
-  };
-
-  const editing = (id, newValue) => {
-    setTodos(prevTodos =>
-      prevTodos.map(todo =>
-        todo.id === id ? { ...todo, text: newValue } : todo
-      )
-    );
-    setEditingId(0);
-    setEditValue('');
-  };
-
-  const remove = id => {
-    setTodos(prevTodos => prevTodos.filter(todo => todo.id !== id));
-  };
-
   const applyFilter = action => {
     setAction(action);
+  };
+
+
+  const addTodoItem = (text) => {
+    dispatch({ type: REDUCER_ACTION.ADD_TODO, payload: { text } });
+  };
+
+  const changeStatus = (id) => {
+    dispatch({ type: REDUCER_ACTION.CHANGE_STATUS, payload: { id } });
+  };
+
+  const remove = (id) => {
+    dispatch({ type: REDUCER_ACTION.REMOVE_TODO, payload: { id } });
+  };
+
+  const setEditingId = (id, text) => {
+    dispatch({ type: REDUCER_ACTION.EDIT_TODO, payload: { id , text} });
   };
 
   const handlePagination = currentPage => {
@@ -71,9 +57,10 @@ const App = () => {
   };
 
   return (
+    <Provider store={store}>
     <div className={theme}>
       <div className="App">
-        <button onClick={toggleTheme}>Toggle Theme</button>
+        <button onClick={toggleTheme}>Toggle Theme: {theme}</button>
         <h1>todos</h1>
         <ToDoHeader
           addTodoItem={addTodoItem}
@@ -98,6 +85,7 @@ const App = () => {
         />
       </div>
     </div>
+    </Provider>
   );
 };
 

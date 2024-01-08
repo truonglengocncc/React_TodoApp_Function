@@ -5,4 +5,10 @@ export const ACTION = {
   }
 
 export const LIMIT = 5;
-  
+
+export const REDUCER_ACTION = { 
+  ADD_TODO: 0,
+  EDIT_TODO: 1,
+  REMOVE_TODO: 2,
+  CHANGE_STATUS: 3,
+}
