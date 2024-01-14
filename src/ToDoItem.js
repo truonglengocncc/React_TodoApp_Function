@@ -1,11 +1,10 @@
 import React from 'react';
-// import './TodoItem.css';
 
-const TodoItem = ({ id, value, changeStatus, status, remove, setEditingId }) => {
+const TodoItem = ({ id, value, changeStatus, status, remove, setEditingId, setEditingText }) => {
     const handleEditingId = (id, value) => {
-        setEditingId(id, value);
+        setEditingId(id);
+        setEditingText(value);
     };
-
     return (
         <div className="todoItem">
             <div className="container">
@@ -14,6 +13,11 @@ const TodoItem = ({ id, value, changeStatus, status, remove, setEditingId }) => 
                     checked={status}
                     onChange={() => changeStatus(id)}
                 />
+                <label
+                    onDoubleClick={() => { handleEditingId(id, value) }}
+                >
+                    {value}
+                </label>
                 <>
                     <label
                         htmlFor={id}
@@ -22,7 +26,7 @@ const TodoItem = ({ id, value, changeStatus, status, remove, setEditingId }) => 
                     >
                         {value}
                     </label>
-                    <label onClick={() => { remove(id) }}>X</label>
+                    <label className="removeButton" onClick={() => { remove(id) }}>X</label>
                 </>
             </div>
         </div>

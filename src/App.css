@@ -36,3 +36,132 @@
     transform: rotate(360deg);
   }
 }
+
+/* App.css */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+.App {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #555;
+}
+
+/* ToDoHeader.css */
+form {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+input {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+}
+
+button {
+  padding: 10px;
+  font-size: 16px;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/* ToDoList.css */
+.ListTodoItem {
+  margin-top: 20px;
+}
+
+.todoItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.checkedLabel {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* Footer.css */
+.footerContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.countItem {
+  font-size: 18px;
+}
+
+.actionButton {
+  display: flex;
+  gap: 10px;
+}
+
+.button {
+  padding: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  color: #555;
+  text-decoration: underline;
+}
+
+/* ToDoItem.css */
+.todoItem {
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  align-items: center;
+}
+
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+.checkedLabel {
+  text-decoration: line-through;
+  color: #888;
+}
+
+/* Thêm CSS cho dấu "x" */
+.removeButton {
+  margin-left: auto; /* Đặt margin-left thành 'auto' để nằm sát bên phải */
+  cursor: pointer;
+  color: #f44336; /* Màu đỏ */
+  font-weight: bold;
+}
+
+.removeButton:hover {
+  text-decoration: underline;
+}

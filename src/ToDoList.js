@@ -3,14 +3,14 @@ import TodoItem from "./ToDoItem";
 // import './ToDoList.css';
 import { ACTION, LIMIT } from "./constant";
 
-const TodoList = ({ action, todos, changeStatus, editing, remove, setEditingId, currentPage }) => {
+const TodoList = ({ todos, changeStatus, remove, action, currentPage, setEditingId, setEditingText }) => {
     const indexOfLastItem = currentPage * LIMIT;
     const indexOfFirstItem = indexOfLastItem - LIMIT;
 
     let currentTodos = todos;
 
     if (action !== ACTION.ALL) {
-        currentTodos = todos.filter(item => item.status === (action === ACTION.ACTIVE)).slice(indexOfFirstItem, indexOfLastItem);
+        currentTodos = todos.filter(item => item.status === (action === ACTION.COMPLETE)).slice(indexOfFirstItem, indexOfLastItem);
     } else {
         currentTodos = todos.slice(indexOfFirstItem, indexOfLastItem);
     }
@@ -24,9 +24,9 @@ const TodoList = ({ action, todos, changeStatus, editing, remove, setEditingId, 
                     value={item.text}
                     status={item.status}
                     changeStatus={changeStatus}
-                    editing={editing}
                     remove={remove}
                     setEditingId={setEditingId}
+                    setEditingText={setEditingText}
                 />
             ))}
         </div>
