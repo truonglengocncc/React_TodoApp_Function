@@ -1,13 +1,14 @@
 import { REDUCER_ACTION } from '../constant';
+import axios from 'axios';
 
-const initialState = [
-  { id: 1, text: 'Go to School', status: false },
-  { id: 2, text: 'Go to lunch', status: false },
-  { id: 3, text: 'Go to lunch 2', status: true },
-];
+const apiEndpoint = 'https://65a3ce94a54d8e805ed40481.mockapi.io/api/todos';
+
+const initialState = [];
 
 const todosReducer = (state = initialState, action) => {
   switch (action.type) {
+    case REDUCER_ACTION.SET_TODOS:
+      return action.payload;
     case REDUCER_ACTION.ADD_TODO:
       const todoItem = {
         id: state.length ? Math.max(...state.map(i => i.id)) + 1 : 0,

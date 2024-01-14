@@ -6,7 +6,9 @@ import React, { useState, useEffect } from 'react';
 import { REDUCER_ACTION } from './constant';
 import { useTheme } from './ThemeProvider';
 import { useSelector, useDispatch } from 'react-redux'; // Chỉ import một lần
+import axios from 'axios';
 
+const apiEndpoint = 'https://65a3ce94a54d8e805ed40481.mockapi.io/api/todos';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -19,10 +21,20 @@ const App = () => {
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
 
+  // useEffect(() => {
+  //   const countComplete = todos.filter(todo => todo.status).length;
+  //   setCountComplete(countComplete);
+  // }, [todos]);
+
   useEffect(() => {
-    const countComplete = todos.filter(todo => todo.status).length;
-    setCountComplete(countComplete);
-  }, [todos]);
+    // Gọi API để lấy danh sách todos khi component được tạo
+    axios.get(apiEndpoint)
+      .then(response => {
+        // Dispatch action để cập nhật state trong Redux
+        dispatch({ type: REDUCER_ACTION.SET_TODOS, payload: response.data });
+      })
+      .catch(error => console.error('Error fetching todos:', error));
+  }, [dispatch]);
 
   const applyFilter = action => {
     setAction(action);
