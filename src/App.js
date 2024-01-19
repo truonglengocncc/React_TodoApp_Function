@@ -40,24 +40,6 @@ const App = () => {
     setAction(action);
   };
 
-  const addTodoItem = (text) => {
-    dispatch({ type: REDUCER_ACTION.ADD_TODO, payload: { text } });
-  };
-
-  const changeStatus = (id) => {
-    dispatch({ type: REDUCER_ACTION.CHANGE_STATUS, payload: { id } });
-  };
-
-  const remove = (id) => {
-    dispatch({ type: REDUCER_ACTION.REMOVE_TODO, payload: { id } });
-  };
-
-  const editTodoItem = (id, text) => {
-    dispatch({ type: REDUCER_ACTION.EDIT_TODO, payload: { id, text } });
-    setEditingId(null);
-    setEditingText('');
-  };
-
   const handlePagination = currentPage => {
     const length = todos.length;
     if (currentPage <= 0) {
@@ -74,15 +56,13 @@ const App = () => {
         <button onClick={toggleTheme}>Toggle Theme: {theme}</button>
         <h1>todos</h1>
         <ToDoHeader
-          addTodoItem={addTodoItem}
-          editTodoItem={editTodoItem}
           editingId={editingId}
           editingText={editingText}
+          setEditingText={setEditingText}
+          setEditingId={setEditingId}
         />
         <TodoList
           todos={todos}
-          changeStatus={changeStatus}
-          remove={remove}
           action={action}
           currentPage={currentPage}
           setEditingId={setEditingId}

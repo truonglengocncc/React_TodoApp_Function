@@ -3,7 +3,7 @@ import TodoItem from "./ToDoItem";
 // import './ToDoList.css';
 import { ACTION, LIMIT } from "./constant";
 
-const TodoList = ({ todos, changeStatus, remove, action, currentPage, setEditingId, setEditingText }) => {
+const TodoList = ({ todos, action, currentPage, setEditingId, setEditingText }) => {
     const indexOfLastItem = currentPage * LIMIT;
     const indexOfFirstItem = indexOfLastItem - LIMIT;
 
@@ -23,8 +23,6 @@ const TodoList = ({ todos, changeStatus, remove, action, currentPage, setEditing
                     id={item.id}
                     value={item.text}
                     status={item.status}
-                    changeStatus={changeStatus}
-                    remove={remove}
                     setEditingId={setEditingId}
                     setEditingText={setEditingText}
                 />

@@ -1,11 +1,25 @@
 import React, { useState, useEffect } from 'react';
+import { REDUCER_ACTION } from './constant';
+import { useDispatch } from 'react-redux'; 
 
-const ToDoHeader = ({ addTodoItem, editTodoItem, editingId, editingText }) => {
+const ToDoHeader = ({ editingId, editingText, setEditingId, setEditingText }) => {
   const [text, setText] = useState('');
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setText(editingText);
   }, [editingText]);
+
+  const addTodoItem = (text) => {
+    dispatch({ type: REDUCER_ACTION.ADD_TODO, payload: { text } });
+  };
+
+  const editTodoItem = (id, text) => {
+    dispatch({ type: REDUCER_ACTION.EDIT_TODO, payload: { id, text } });
+    setEditingId(null);
+    setEditingText('');
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
