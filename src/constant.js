@@ -13,3 +13,5 @@ export const REDUCER_ACTION = {
   CHANGE_STATUS: 'CHANGE_STATUS',
   SET_TODOS: 'SET_TODOS',
 }
+
+export const BASE_API = 'https://65a3ce94a54d8e805ed40481.mockapi.io/api/todos';

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { REDUCER_ACTION } from './constant';
-import { useDispatch } from 'react-redux'; 
+import { BASE_API, REDUCER_ACTION } from './constant';
+import { useDispatch } from 'react-redux';
+import axios from 'axios';
 
 const ToDoHeader = ({ editingId, editingText, setEditingId, setEditingText }) => {
   const [text, setText] = useState('');
@@ -11,15 +12,26 @@ const ToDoHeader = ({ editingId, editingText, setEditingId, setEditingText }) =>
   }, [editingText]);
 
   const addTodoItem = (text) => {
-    dispatch({ type: REDUCER_ACTION.ADD_TODO, payload: { text } });
+    let newData = { text, status: false };
+
+    axios.post(BASE_API, newData)
+      .then(response => {
+        let { data } = response;
+        dispatch({ type: REDUCER_ACTION.ADD_TODO, payload: data });
+      })
+      .catch(error => console.error('Error adding todo:', error));
   };
 
   const editTodoItem = (id, text) => {
-    dispatch({ type: REDUCER_ACTION.EDIT_TODO, payload: { id, text } });
-    setEditingId(null);
-    setEditingText('');
-  };
+    axios.put(`${BASE_API}/${id}`, { text })
+      .then(response => {
+        let {id, text} = response.data;
+        dispatch({ type: REDUCER_ACTION.EDIT_TODO, payload: { id, text } });
+        setEditingId(null);
+        setEditingText('');
+      })
 
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();

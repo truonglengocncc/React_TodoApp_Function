@@ -5,7 +5,7 @@ import { ACTION, LIMIT } from './constant';
 const Footer = ({ applyFilter, count, currentPage, handlePagination, length }) => {
     return (
         <div className='footerContainer'>
-            <div className='countItem'>{count}</div>
+            <div className='countItem'>Count item complete: {count}</div>
             <div className='actionButton'>
                 <button className='button' onClick={() => { applyFilter(ACTION.ALL) }}>All</button>
                 <button className='button' onClick={() => { applyFilter(ACTION.ACTIVE) }}>Active</button>

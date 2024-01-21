@@ -3,12 +3,10 @@ import ToDoHeader from './Head';
 import TodoList from './ToDoList';
 import Footer from './Footer';
 import React, { useState, useEffect } from 'react';
-import { REDUCER_ACTION } from './constant';
+import { BASE_API, LIMIT, REDUCER_ACTION } from './constant';
 import { useTheme } from './ThemeProvider';
-import { useSelector, useDispatch } from 'react-redux'; // Chỉ import một lần
+import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
-
-const apiEndpoint = 'https://65a3ce94a54d8e805ed40481.mockapi.io/api/todos';
 
 const App = () => {
   const dispatch = useDispatch();
@@ -17,36 +15,43 @@ const App = () => {
   const { toggleTheme, theme } = useTheme();
   const [countComplete, setCountComplete] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
-
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
 
-  // useEffect(() => {
-  //   const countComplete = todos.filter(todo => todo.status).length;
-  //   setCountComplete(countComplete);
-  // }, [todos]);
+  const setCountTodoComplete = (todos) => todos.filter(todo => todo.status).length;
 
   useEffect(() => {
-    // Gọi API để lấy danh sách todos khi component được tạo
-    axios.get(apiEndpoint)
-      .then(response => {
-        // Dispatch action để cập nhật state trong Redux
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(BASE_API);
         dispatch({ type: REDUCER_ACTION.SET_TODOS, payload: response.data });
-      })
-      .catch(error => console.error('Error fetching todos:', error));
+      } catch (error) {
+        console.error('Error fetching todos:', error);
+      }
+    };
+
+    fetchData();
   }, [dispatch]);
 
-  const applyFilter = action => {
+  useEffect(() => {
+    const completedCount = setCountTodoComplete(todos);
+    setCountComplete(completedCount);
+  }, [todos]);
+
+  const applyFilter = (action) => {
     setAction(action);
   };
 
-  const handlePagination = currentPage => {
-    const length = todos.length;
-    if (currentPage <= 0) {
+  const handlePagination = (currentPage) => {
+    const maxCount = Math.ceil(todos.length / LIMIT);
+    currentPage = parseInt(currentPage, 10);
+
+    if (currentPage <= 0 || isNaN(currentPage)) {
       currentPage = 1;
-    } else if (currentPage > length) {
-      currentPage = length;
+    } else if (currentPage > maxCount) {
+      currentPage = maxCount;
     }
+
     setCurrentPage(currentPage);
   };
 
@@ -79,5 +84,4 @@ const App = () => {
   );
 };
 
-// App.contextType = ThemeContext 
 export default App;
