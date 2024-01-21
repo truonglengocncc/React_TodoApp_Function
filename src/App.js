@@ -18,8 +18,6 @@ const App = () => {
   const [editingId, setEditingId] = useState(null);
   const [editingText, setEditingText] = useState('');
 
-  const setCountTodoComplete = (todos) => todos.filter(todo => todo.status).length;
-
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,7 +32,7 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const completedCount = setCountTodoComplete(todos);
+    const completedCount = todos.filter(todo => todo.status).length;
     setCountComplete(completedCount);
   }, [todos]);
 
