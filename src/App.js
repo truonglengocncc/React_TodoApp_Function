@@ -7,6 +7,7 @@ import { BASE_API, LIMIT, REDUCER_ACTION } from './constant';
 import { useTheme } from './ThemeProvider';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
+import { Routes, Route, Outlet, Link } from "react-router-dom";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -58,28 +59,46 @@ const App = () => {
       <div className="App">
         <button onClick={toggleTheme}>Toggle Theme: {theme}</button>
         <h1>todos</h1>
-        <ToDoHeader
-          editingId={editingId}
-          editingText={editingText}
-          setEditingText={setEditingText}
-          setEditingId={setEditingId}
-        />
-        <TodoList
-          todos={todos}
-          action={action}
-          currentPage={currentPage}
-          setEditingId={setEditingId}
-          setEditingText={setEditingText}
-        />
-        <Footer
-          applyFilter={applyFilter}
-          count={countComplete}
-          currentPage={currentPage}
-          handlePagination={handlePagination}
-        />
+        <Routes>
+          <Route path="/header" element={<Outlet />}>
+            <Route index element={<ToDoHeader
+              editingId={editingId}
+              editingText={editingText}
+              setEditingText={setEditingText}
+              setEditingId={setEditingId}
+            />} />
+          </Route>
+
+          <Route
+            path="/"
+            element={ 
+              <div>
+                <br></br>
+                <Link to="/header">Add todo</Link>
+                <hr/>
+                <br></br>
+                <TodoList
+                  todos={todos}
+                  action={action}
+                  currentPage={currentPage}
+                  setEditingId={setEditingId}
+                  setEditingText={setEditingText}
+                />
+                <Footer
+                  applyFilter={applyFilter}
+                  count={countComplete}
+                  currentPage={currentPage}
+                  handlePagination={handlePagination}
+                />
+              </div>
+            }
+          />
+        </Routes>
+
       </div>
     </div>
   );
 };
+
 
 export default App;

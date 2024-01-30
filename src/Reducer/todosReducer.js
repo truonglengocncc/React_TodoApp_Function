@@ -29,6 +29,11 @@ const todosReducer = (state = initialState, action) => {
       return state.filter(todo =>
         todo.id !== action.payload.id
       );
+
+    case REDUCER_ACTION.CHANGE_REAL_ID:
+      return state.map(todo =>
+        todo.id === action.payload.fakeId ? { ...todo, id: action.payload.id } : todo
+      );
        
     default:
       return state;

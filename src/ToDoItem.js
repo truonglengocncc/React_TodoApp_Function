@@ -2,11 +2,14 @@ import React from 'react';
 import { BASE_API, REDUCER_ACTION } from './constant';
 import { useDispatch } from 'react-redux';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 const TodoItem = ({ id, value, status, setEditingId, setEditingText }) => {
+    const navigate = useNavigate();
     const handleEditingId = (id, value) => {
         setEditingId(id);
         setEditingText(value);
+        navigate("/header");
     };
 
     const dispatch = useDispatch();
